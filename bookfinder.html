@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>书荒拯救站 - 复古阅读社区</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --red: #912825; /* 红色 */
+            --brown: #7F5046; /* 棕色 */
+            --pink: #E9AEA0; /* 粉色 */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f7f0;
+            color: var(--brown);
+            line-height: 1.6;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23912825' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--red);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--pink);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--pink);
+        }
+        
+        nav ul li a.active {
+            color: var(--pink);
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--pink);
+        }
+        
+        /* Main Content Styles */
+        main {
+            min-height: calc(100vh - 140px);
+            padding: 2rem 0;
+        }
+        
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--red) 0%, var(--brown) 100%);
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--brown);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            background-color: var(--red);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--brown);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--red);
+        }
+        
+        /* Card Styles */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--pink);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .card-img {
+            height: 200px;
+            background-color: var(--pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--brown);
+            font-weight: 600;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .card-img::after {
+            content: "书籍封面";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--brown);
+            font-weight: 600;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--brown);
+        }
+        
+        .card-text {
+            color: var(--brown);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        
+        /* Quiz Styles */
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            border: 1px solid var(--pink);
+        }
+        
+        .quiz-question {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--brown);
+        }
+        
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .quiz-option {
+            background-color: var(--pink);
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: var(--brown);
+        }
+        
+        .quiz-option:hover {
+            background-color: var(--red);
+            color: white;
+        }
+        
+        .quiz-option.selected {
+            background-color: var(--brown);
+            color: white;
+        }
+        
+        .quiz-results {
+            display: none;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: var(--pink);
+            border-radius: 10px;
+        }
+        
+        /* Book Grid for Results */
+        .book-results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .book-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            border: 1px solid var(--pink);
+            cursor: pointer;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .book-cover {
+            height: 180px;
+            background: linear-gradient(135deg, var(--red) 0%, var(--brown) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .book-cover::after {
+            content: "书籍封面";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .book-info {
+            padding: 1rem;
+        }
+        
+        .book-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--brown);
+        }
+        
+        .book-author {
+            color: var(--brown);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+        
+        .book-desc {
+            color: var(--brown);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        
+        .book-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .book-tag {
+            background-color: var(--pink);
+            color: var(--brown);
+            padding: 0.2rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--brown);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--pink);
+            border-radius: 5px;
+            font-size: 1rem;
+            color: var(--brown);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--red);
+        }
+        
+        /* Reading Group Styles */
+        .group-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .group-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--pink);
+        }
+        
+        .group-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--brown);
+        }
+        
+        .group-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--brown);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        
+        .group-progress {
+            height: 8px;
+            background-color: var(--pink);
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .group-progress-bar {
+            height: 100%;
+            background-color: var(--red);
+            border-radius: 4px;
+        }
+        
+        /* Bookshelf Styles */
+        .bookshelf-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--pink);
+        }
+        
+        .bookshelf-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            color: var(--brown);
+        }
+        
+        .bookshelf-tab.active {
+            border-bottom-color: var(--red);
+            font-weight: 600;
+        }
+        
+        .bookshelf-content {
+            display: none;
+        }
+        
+        .bookshelf-content.active {
+            display: block;
+        }
+        
+        /* Reading Stats */
+        .reading-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            border: 1px solid var(--pink);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--red);
+        }
+        
+        .stat-label {
+            color: var(--brown);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: var(--red);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+            color: white;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            margin: 1rem 0;
+        }
+        
+        .footer-links a {
+            margin: 0 1rem;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .copyright {
+            color: var(--pink);
+            font-size: 0.9rem;
+        }
+        
+        /* Book Detail Page */
+        .book-detail {
+            display: none;
+        }
+        
+        .book-detail.active {
+            display: block;
+        }
+        
+        .book-header {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .book-cover-large {
+            width: 300px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--red) 0%, var(--brown) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .book-cover-large::after {
+            content: "书籍封面";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .book-info-large {
+            flex: 1;
+        }
+        
+        .book-title-large {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--brown);
+        }
+        
+        .book-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .book-meta-item {
+            background-color: var(--pink);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            color: var(--brown);
+        }
+        
+        .book-description {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .back-button {
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">书荒<span>拯救站</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active" data-page="home">首页</a></li>
+                    <li><a href="#" class="nav-link" data-page="matching">书籍匹配</a></li>
+                    <li><a href="#" class="nav-link" data-page="community">阅读社区</a></li>
+                    <li><a href="#" class="nav-link" data-page="my-library">我的书房</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>发现你的下一本挚爱书籍</h1>
+                    <p>通过个性化书籍推荐找到适合你的好书，加入阅读社区分享你的阅读旅程</p>
+                    <a href="#" class="btn" id="start-quiz-btn">开始书荒测试</a>
+                </div>
+            </div>
+
+            <!-- Book Quiz Section -->
+            <div class="quiz-container" id="book-quiz">
+                <h2 class="section-title">书荒测试</h2>
+                <div id="quiz-content">
+                    <div class="quiz-question" id="quiz-question">你最喜欢的阅读场景是？</div>
+                    <div class="quiz-options" id="quiz-options">
+                        <div class="quiz-option" data-value="1">家中舒适角落，配一杯热饮</div>
+                        <div class="quiz-option" data-value="2">大自然中，享受宁静</div>
+                        <div class="quiz-option" data-value="3">热闹咖啡馆，有背景白噪音</div>
+                        <div class="quiz-option" data-value="4">通勤路上或旅行途中</div>
+                    </div>
+                    <div class="quiz-navigation">
+                        <button class="btn" id="prev-question" disabled>上一题</button>
+                        <button class="btn" id="next-question">下一题</button>
+                    </div>
+                </div>
+                
+                <!-- Quiz Results - Hidden by default -->
+                <div class="quiz-results" id="quiz-results">
+                    <h3>根据你的阅读偏好，为你推荐以下10本书：</h3>
+                    <div class="book-results-grid">
+                        <!-- 中文书籍 (5本) -->
+                        <div class="book-card" data-book="huozhe">
+                            <div class="book-cover" style="background-image: url('images/huozhe.jpg')"></div>
+                            <div class="book-info">
+                                <h3 class="book-title">活着</h3>
+                                <p class="book-author">余华</p>
+                                <p class="book-desc">通过一个普通农民的一生，展现中国社会的变迁与生命的韧性</p>
+                                <div class="book-tags">
+                                    <span class="book-tag">中国文学</span>
+                                    <span class="book-tag">人生哲理</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-card" data-book="weicheng">
+                            <div class="book-cover" style="background-image: url('images/weicheng.jpg')"></div>
+                            <div class="book-info">
+                                <h3 class="book-title">围城</h3>
+                                <p class="book-author">钱钟书</p>
+                                <p class="book-desc">现代中国文学经典，幽默讽刺地描绘知识分子的生活困境</p>
+                                <div class="book-tags">
+                                    <span class="book-tag">讽刺文学</span>
+                                    <span class="book-tag">社会观察</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-card" data-book="pingfandeshijie">
+                            <div class="book-cover" style="background-image: url('images/pingfan.jpg')"></div>
+                            <div class="book-info">
+                                <h3 class="book-title">平凡的世界</h3>
+                                <p class="book-author">路遥</p>
+                                <p class="book-desc">描绘中国农村青年在改革开放时期的奋斗与成长</p>
+                                <div class="book-tags">
+                                    <span class="book-tag">现实主义</span>
+                                    <span class="book-tag">成长小说</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-card" data-book="santi">
+                            <div class="book-cover" style="background-image: url('images/santi.jpg')"></div>
+                            <div class="book-info">
+                                <h3 class="book-title">三体</h3>
+                                <p class="book-author">刘慈欣</p>
+                                <p class="book-desc">中国科幻里程碑，探讨人类文明与外星接触的宏大命题</p>
+                                <div class="book-tags">
+                                    <span class="book-tag">科幻</span>
+                                    <span class="book-tag">硬科幻</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-card" data-book="biancheng">
+                            <div class="book-cover" style="background-image: url('images/biancheneg.jpg')"></div>
+                            <div class="book-info">
+                                <h3 class="book-title">边城</h3>
+                                <p class="book-author">沈从文</p>
+                                <p class="book-desc">描绘湘西风土人情的诗意小说，展现纯真爱情与人生无奈</p>
+                                <div class="book-tags">
+                                    <span class="book-tag">乡土文学</span>
+                                    <span class="book-tag">爱情</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 外国书籍 (5本) -->
+                        <div class="book-card" data-book="nuoweidesenlin">
+                            <div class="book-cover" style="background-image: url('images/nuo.jpg')"></div>
+                            <div class="book-info">
+                                <h3 class="book-title">挪威的森林</h3>
+                                <p class="book-author">村上春树 [日本]</p>
+                                <p class="book-desc">青春、爱情与死亡的交织，描绘1960年代日本青年的精神世界</p>
+                                <div class="book-tags">
+                                    <span class="book-tag">青春文学</span>
+                                    <span class="book-tag">爱情</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-card" data-book="muyangshaonian">
+                            <div class="book-cover" style="background-image: url('images/muyang.jpg')"></div>
+                            <div class="book-info">
+                                <h3 class="book-title">牧羊少年奇幻之旅</h3>
+                                <p class="book-author">保罗·柯艾略 [巴西]</p>
+                                <p class="book-desc">追寻天命与个人梦想的寓言，充满哲理与人生智慧</p>
+                                <div class="book-tags">
+                                    <span class="book-tag">寓言</span>
+                                    <span class="book-tag">哲理</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-card" data-book="aomanyupianjian">
+                            <div class="book-cover" style="background-image: url('images/aoman.jpg')"></div>
+                            <div class="book-info">
+                                <h3 class="book-title">傲慢与偏见</h3>
+                                <p class="book-author">简·奥斯汀 [英国]</p>
+                                <p class="book-desc">英国文学经典，描绘19世纪英国乡绅家庭的爱情与婚姻观</p>
+                                <div class="book-tags">
+                                    <span class="book-tag">经典文学</span>
+                                    <span class="book-tag">爱情</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-card" data-book="bainiangudu">
+                            <div class="book-cover" style="background-image: url('images/bainian.jpg')"></div>
+                            <div class="book-info">
+                                <h3 class="book-title">百年孤独</h3>
+                                <p class="book-author">加西亚·马尔克斯 [哥伦比亚]</p>
+                                <p class="book-desc">魔幻现实主义代表作，讲述布恩迪亚家族七代人的传奇故事</p>
+                                <div class="book-tags">
+                                    <span class="book-tag">魔幻现实主义</span>
+                                    <span class="book-tag">家族史诗</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-card" data-book="xiaowangzi">
+                            <div class="book-cover" style="background-image: url('images/xiaowangzi.jpg')"></div>
+                            <div class="book-info">
+                                <h3 class="book-title">小王子</h3>
+                                <p class="book-author">安托万·德·圣-埃克苏佩里 [法国]</p>
+                                <p class="book-desc">写给成年人的童话，探讨友谊、爱与责任的真谛</p>
+                                <div class="book-tags">
+                                    <span class="book-tag">童话</span>
+                                    <span class="book-tag">哲理</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn" id="retake-quiz">重新测试</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Popular Reading Groups -->
+            <h2 class="section-title">热门阅读小组</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-img" style="background-image: url('https://via.placeholder.com/280x200?text=经典文学')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">经典文学爱好者</h3>
+                        <p class="card-text">一起探讨中外经典文学作品，分享阅读心得</p>
+                        <a href="#" class="btn">加入小组</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('https://via.placeholder.com/280x200?text=科幻世界')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">科幻文学探索</h3>
+                        <p class="card-text">畅游科幻世界，讨论未来科技与人类命运</p>
+                        <a href="#" class="btn">加入小组</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('https://via.placeholder.com/280x200?text=推理悬疑')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">推理小说迷</h3>
+                        <p class="card-text">解开谜题，分享推理乐趣，挑战思维极限</p>
+                        <a href="#" class="btn">加入小组</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book Heat Ranking -->
+            <h2 class="section-title">本周热门书籍</h2>
+            <div class="quiz-container">
+                <ol>
+                    <li><strong>活着</strong> <span class="book-tag">1.2k 人匹配</span></li>
+                    <li><strong>三体</strong> <span class="book-tag">980 人匹配</span></li>
+                    <li><strong>挪威的森林</strong> <span class="book-tag">875 人匹配</span></li>
+                    <li><strong>百年孤独</strong> <span class="book-tag">756 人匹配</span></li>
+                    <li><strong>小王子</strong> <span class="book-tag">689 人匹配</span></li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Book Matching Page -->
+        <section id="matching" class="page">
+            <h1 class="section-title">书籍匹配中心</h1>
+            
+            <!-- 风格选择部分 -->
+            <div class="quiz-container">
+                <h2>选择你喜欢的图书风格</h2>
+                <div class="quiz-options" id="style-options">
+                    <div class="quiz-option" data-style="literary">文学经典</div>
+                    <div class="quiz-option" data-style="sci-fi">科幻奇幻</div>
+                    <div class="quiz-option" data-style="mystery">悬疑推理</div>
+                    <div class="quiz-option" data-style="romance">爱情小说</div>
+                </div>
+                <button class="btn" id="find-books-btn" style="display: none;">查找匹配书籍</button>
+            </div>
+            
+            <!-- 匹配结果部分 -->
+            <div class="quiz-container" id="matching-results" style="display: none;">
+                <h2>为你找到的匹配书籍</h2>
+                <div class="book-results-grid" id="matched-books">
+                    <!-- 这里会动态填充匹配的书籍 -->
+                </div>
+            </div>
+            
+            <!-- Advanced Filtering -->
+            <div class="quiz-container">
+                <h2>高级书籍筛选</h2>
+                <div class="form-group">
+                    <label class="form-label">题材</label>
+                    <select class="form-control">
+                        <option value="">任意题材</option>
+                        <option value="fiction">小说</option>
+                        <option value="non-fiction">非虚构</option>
+                        <option value="mystery">悬疑推理</option>
+                        <option value="sci-fi">科幻</option>
+                        <option value="fantasy">奇幻</option>
+                        <option value="romance">爱情</option>
+                        <option value="biography">传记</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">阅读时长</label>
+                    <select class="form-control">
+                        <option value="">任意时长</option>
+                        <option value="short">短篇 (5小时以下)</option>
+                        <option value="medium">中篇 (5-15小时)</option>
+                        <option value="long">长篇 (15小时以上)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">评分</label>
+                    <select class="form-control">
+                        <option value="">任意评分</option>
+                        <option value="4.5">4.5+ 星</option>
+                        <option value="4.0">4.0+ 星</option>
+                        <option value="3.5">3.5+ 星</option>
+                    </select>
+                </div>
+                <button class="btn">查找书籍</button>
+            </div>
+            
+            <!-- Reverse Recommendation -->
+            <div class="quiz-container">
+                <h2>反向推荐</h2>
+                <p>告诉我们你不想读的类型，我们会为你找到完美的替代选择。</p>
+                <div class="form-group">
+                    <label class="form-label">避免的题材</label>
+                    <select class="form-control" multiple>
+                        <option value="horror">恐怖</option>
+                        <option value="romance">爱情</option>
+                        <option value="self-help">自助</option>
+                        <option value="historical">历史小说</option>
+                        <option value="thriller">惊悚</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">避免的主题</label>
+                    <input type="text" class="form-control" placeholder="例如：悲伤结局、复杂情节">
+                </div>
+                <button class="btn">获取替代推荐</button>
+            </div>
+        </section>
+
+        <!-- Reading Community Page -->
+        <section id="community" class="page">
+            <h1 class="section-title">阅读社区</h1>
+            
+            <!-- Reading Groups List -->
+            <h2 class="section-title">活跃阅读小组</h2>
+            <div class="group-list">
+                <div class="group-card">
+                    <h3 class="group-title">经典文学爱好者</h3>
+                    <div class="group-meta">
+                        <span>128 名成员</span>
+                        <span>正在阅读: 傲慢与偏见</span>
+                    </div>
+                    <div class="group-progress">
+                        <div class="group-progress-bar" style="width: 65%"></div>
+                    </div>
+                    <p>每周讨论永恒经典作品。</p>
+                    <a href="#" class="btn">查看小组</a>
+                </div>
+                <div class="group-card">
+                    <h3 class="group-title">悬疑推理爱好者</h3>
+                    <div class="group-meta">
+                        <span>95 名成员</span>
+                        <span>正在阅读: 白夜行</span>
+                    </div>
+                    <div class="group-progress">
+                        <div class="group-progress-bar" style="width: 40%"></div>
+                    </div>
+                    <p>与志同道合的侦探头脑一起解开谜团。</p>
+                    <a href="#" class="btn">查看小组</a>
+                </div>
+                <div class="group-card">
+                    <h3 class="group-title">科幻探索者</h3>
+                    <div class="group-meta">
+                        <span>112 名成员</span>
+                        <span>正在阅读: 三体</span>
+                    </div>
+                    <div class="group-progress">
+                        <div class="group-progress-bar" style="width: 75%"></div>
+                    </div>
+                    <p>穿越想象世界，探索未来概念。</p>
+                    <a href="#" class="btn">查看小组</a>
+                </div>
+            </div>
+            
+            <!-- Create New Reading Group -->
+            <div class="quiz-container">
+                <h2>创建新阅读小组</h2>
+                <div class="form-group">
+                    <label class="form-label">书籍标题</label>
+                    <input type="text" class="form-control" placeholder="输入书籍标题">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">小组描述</label>
+                    <textarea class="form-control" rows="3" placeholder="描述你的阅读小组"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">阅读节奏</label>
+                    <select class="form-control">
+                        <option value="daily">每日</option>
+                        <option value="weekly" selected>每周</option>
+                        <option value="biweekly">每两周</option>
+                        <option value="monthly">每月</option>
+                    </select>
+                </div>
+                <button class="btn">创建阅读小组</button>
+            </div>
+        </section>
+
+        <!-- My Library Page -->
+        <section id="my-library" class="page">
+            <h1 class="section-title">我的书房</h1>
+            
+            <!-- Reading Statistics -->
+            <h2 class="section-title">阅读统计</h2>
+            <div class="reading-stats">
+                <div class="stat-card">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">已读书籍</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">3,842</div>
+                    <div class="stat-label">已读页数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">156</div>
+                    <div class="stat-label">阅读天数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">85</div>
+                    <div class="stat-label">获得积分</div>
+                </div>
+            </div>
+            
+            <!-- Bookshelf Tabs -->
+            <div class="bookshelf-tabs">
+                <div class="bookshelf-tab active" data-tab="reading">正在阅读</div>
+                <div class="bookshelf-tab" data-tab="want-to-read">想读</div>
+                <div class="bookshelf-tab" data-tab="finished">已读</div>
+            </div>
+            
+            <!-- Currently Reading -->
+            <div class="bookshelf-content active" id="reading">
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/280x200?text=活着')"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">活着</h3>
+                            <p class="card-text">进度: 65%</p>
+                            <div>我的评分: ★★★★☆</div>
+                            <a href="#" class="btn">添加笔记</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/280x200?text=原子习惯')"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">原子习惯</h3>
+                            <p class="card-text">进度: 30%</p>
+                            <div>我的评分: 尚未评分</div>
+                            <a href="#" class="btn">添加笔记</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Want to Read -->
+            <div class="bookshelf-content" id="want-to-read">
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/280x200?text=挪威的森林')"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">挪威的森林</h3>
+                            <p class="card-text">村上春树</p>
+                            <a href="#" class="btn">开始阅读</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/280x200?text=百年孤独')"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">百年孤独</h3>
+                            <p class="card-text">加西亚·马尔克斯</p>
+                            <a href="#" class="btn">开始阅读</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Finished Books -->
+            <div class="bookshelf-content" id="finished">
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/280x200?text=围城')"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">围城</h3>
+                            <p class="card-text">钱钟书</p>
+                            <div>我的评分: ★★★★★</div>
+                            <a href="#" class="btn">查看笔记</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/280x200?text=小王子')"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">小王子</h3>
+                            <p class="card-text">安托万·德·圣-埃克苏佩里</p>
+                            <div>我的评分: ★★★★☆</div>
+                            <a href="#" class="btn">查看笔记</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <a href="#" class="logo">书荒<span>拯救站</span></a>
+            <div class="footer-links">
+                <a href="#">关于我们</a>
+                <a href="#">联系我们</a>
+                <a href="#">隐私政策</a>
+                <a href="#">服务条款</a>
+            </div>
+            <p class="copyright">© 2025 书荒拯救站. 保留所有权利</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation between pages
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(item => {
+                    item.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Show selected page
+                const pageId = this.getAttribute('data-page');
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById(pageId).classList.add('active');
+            });
+        });
+        
+        // Bookshelf tabs
+        document.querySelectorAll('.bookshelf-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Update active tab
+                document.querySelectorAll('.bookshelf-tab').forEach(item => {
+                    item.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Show selected content
+                const tabId = this.getAttribute('data-tab');
+                document.querySelectorAll('.bookshelf-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Quiz functionality
+        const quizQuestions = [
+            "你最喜欢的阅读场景是？",
+            "你偏好哪种类型的书籍？",
+            "你通常有多少时间用于阅读？",
+            "你阅读的主要目的是什么？",
+            "哪种阅读心情最符合你当前的状态？"
+        ];
+        
+        const quizOptions = [
+            [
+                "家中舒适角落，配一杯热饮",
+                "大自然中，享受宁静",
+                "热闹咖啡馆，有背景白噪音",
+                "通勤路上或旅行途中"
+            ],
+            [
+                "人物刻画深刻，情感丰富的故事",
+                "情节紧凑，充满转折的悬疑推理",
+                "思想深刻，引发思考的哲理作品",
+                "世界观宏大，想象力丰富的奇幻科幻"
+            ],
+            [
+                "短时间阅读（15-30分钟）",
+                "中等时长（1-2小时）",
+                "长时间沉浸（3小时以上）",
+                "时间不固定，随缘阅读"
+            ],
+            [
+                "娱乐消遣，逃离现实",
+                "学习知识，个人成长",
+                "情感共鸣，心灵慰藉",
+                "社交分享，与人交流"
+            ],
+            [
+                "轻松愉快，想要放松",
+                "深沉思考，探索人生",
+                "冒险刺激，寻求新鲜",
+                "浪漫温馨，感受美好"
+            ]
+        ];
+        
+        let currentQuestion = 0;
+        let userAnswers = [];
+        
+        document.getElementById('start-quiz-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('book-quiz').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        document.getElementById('next-question').addEventListener('click', function() {
+            // Get selected option
+            const selectedOption = document.querySelector('.quiz-option.selected');
+            if (!selectedOption && currentQuestion < quizQuestions.length - 1) {
+                alert("请选择一个选项再继续");
+                return;
+            }
+            
+            if (selectedOption) {
+                userAnswers[currentQuestion] = selectedOption.getAttribute('data-value');
+            }
+            
+            if (currentQuestion < quizQuestions.length - 1) {
+                currentQuestion++;
+                updateQuiz();
+            } else {
+                // Show results
+                showQuizResults();
+            }
+        });
+        
+        document.getElementById('prev-question').addEventListener('click', function() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                updateQuiz();
+            }
+        });
+        
+        document.getElementById('retake-quiz').addEventListener('click', function() {
+            currentQuestion = 0;
+            userAnswers = [];
+            document.getElementById('quiz-content').style.display = 'block';
+            document.getElementById('quiz-results').style.display = 'none';
+            updateQuiz();
+        });
+        
+        function updateQuiz() {
+            document.getElementById('quiz-question').textContent = quizQuestions[currentQuestion];
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            
+            quizOptions[currentQuestion].forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                if (userAnswers[currentQuestion] == (index + 1)) {
+                    optionElement.classList.add('selected');
+                }
+                optionElement.textContent = option;
+                optionElement.setAttribute('data-value', index + 1);
+                
+                optionElement.addEventListener('click', function() {
+                    document.querySelectorAll('.quiz-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Update navigation buttons
+            document.getElementById('prev-question').disabled = currentQuestion === 0;
+            document.getElementById('next-question').textContent = 
+                currentQuestion === quizQuestions.length - 1 ? '查看结果' : '下一题';
+                
+            // Hide results when going back
+            document.getElementById('quiz-results').style.display = 'none';
+        }
+        
+        function showQuizResults() {
+            // Hide quiz content
+            document.getElementById('quiz-content').style.display = 'none';
+            
+            // Show results
+            document.getElementById('quiz-results').style.display = 'block';
+        }
+        
+        // Book matching functionality
+        const styleOptions = document.querySelectorAll('#style-options .quiz-option');
+        const findBooksBtn = document.getElementById('find-books-btn');
+        const matchingResults = document.getElementById('matching-results');
+        const matchedBooks = document.getElementById('matched-books');
+        
+        styleOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                styleOptions.forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                findBooksBtn.style.display = 'block';
+            });
+        });
+        
+        findBooksBtn.addEventListener('click', function() {
+            const selectedStyle = document.querySelector('#style-options .quiz-option.selected').getAttribute('data-style');
+            
+            // 清空之前的匹配结果
+            matchedBooks.innerHTML = '';
+            
+            // 根据选择的风格显示匹配的书籍
+            let booksToShow = [];
+            
+            switch(selectedStyle) {
+                case 'literary':
+                    booksToShow = ['huozhe', 'weicheng', 'pingfandeshijie', 'aomanyupianjian'];
+                    break;
+                case 'sci-fi':
+                    booksToShow = ['santi', 'bainiangudu'];
+                    break;
+                case 'mystery':
+                    booksToShow = ['nuoweidesenlin'];
+                    break;
+                case 'romance':
+                    booksToShow = ['biancheng', 'xiaowangzi', 'muyangshaonian'];
+                    break;
+            }
+            
+            // 显示匹配结果区域
+            matchingResults.style.display = 'block';
+            
+            // 滚动到匹配结果区域
+            matchingResults.scrollIntoView({ behavior: 'smooth' });
+            
+            // 显示匹配的书籍
+            booksToShow.forEach(bookId => {
+                const bookCard = document.querySelector(`.book-card[data-book="${bookId}"]`);
+                if (bookCard) {
+                    const clone = bookCard.cloneNode(true);
+                    matchedBooks.appendChild(clone);
+                }
+            });
+        });
+        
+        // Initialize the quiz
+        updateQuiz();
+    </script>
+</body>
+</html>
